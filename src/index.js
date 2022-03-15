@@ -3,33 +3,78 @@ import './styles.css';
 
 //Global Declarations
 
-let addItem = document.getElementById('add-item');
-let addProject = document.getElementById('add-project');
-let newItemForm = document.getElementById('new-item');
-let newProjectForm = document.getElementById('new-project');
-let closeItemForm = document.getElementById('close-item-form');
+let addItemButton = document.getElementById('add-item');
+let addProjectButton = document.getElementById('add-project');
+let newItemFormDiv = document.getElementById('new-item');
+let newProjectFormDiv = document.getElementById('new-project');
+let closeItemFormButton = document.getElementById('close-item-form');
 let closeProjectForm = document.getElementById('close-project-form');
+let itemForm = document.getElementById('item-form');
+let projectForm = document.getElementById('project-form');
+let errorDiv = document.getElementById('error-div');
+let projects = [];
+let items = [];
+
+//DOM functions
+function removeForms(){
+    newItemFormDiv.classList.add('none');
+    newProjectFormDiv.classList.add('none');
+}
 
 function toggle(){
-    newItemForm.classList.add('none');
-    newProjectForm.classList.add('none');
+    removeForms();
     if(this.id === 'add-item'){
-        newItemForm.classList.toggle('none');
+        newItemFormDiv.classList.toggle('none');
     }if(this.id === 'add-project'){
-        newProjectForm.classList.toggle('none');
+        newProjectFormDiv.classList.toggle('none');
     }
     // console.log(this.innerHTML);
 }
+function resetForms(){
+    itemForm.reset();
+    projectForm.reset();
+}
 function close(event){
     event.preventDefault();
+    resetForms();
     if(this.id === 'close-project-form'){
-        newProjectForm.classList.add('none');
+        newProjectFormDiv.classList.add('none');
     }
     if(this.id === 'close-item-form'){
-        newItemForm.classList.add('none');
+        newItemFormDiv.classList.add('none');
     }
 }
-addItem.addEventListener('click',toggle);
-addProject.addEventListener('click',toggle);
-closeItemForm.addEventListener('click',close);
+
+function showInvalidErrorMessage(message){
+    errorDiv.textContent = message;
+    errorDiv.classList.remove('none');
+    setTimeout(() => {
+        errorDiv.classList.add('none');
+    }, 2500);
+}
+function addItemToProject(event){
+    event.preventDefault();
+    if(projects.length === 0){
+        showInvalidErrorMessage("Please add a project first before adding an item to it.");
+        return;
+    }
+    console.log(event.target);
+    removeForms();
+}
+function addNewProject(event){
+    event.preventDefault();
+    console.log(event);
+    removeForms();
+
+}
+
+
+
+//Event Listeners
+addItemButton.addEventListener('click',toggle);
+addProjectButton.addEventListener('click',toggle);
+closeItemFormButton.addEventListener('click',close);
 closeProjectForm.addEventListener('click',close);
+
+itemForm.addEventListener('submit',addItemToProject);
+projectForm.addEventListener('submit',addNewProject);

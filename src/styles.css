@@ -4,3 +4,7 @@
 ul{
     list-style-type: none;
 }
+.error{
+    border: 1px solid red;
+    color: red;
+}
