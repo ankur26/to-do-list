@@ -13,27 +13,37 @@
         <h1>To-Do List</h1>
         <nav>
             <ul>
-                <li><button>Add Project</button></li>
-                <li><button>Add Item</button></li>
+                <li><button id="add-project">Add Project</button></li>
+                <li><button id="add-item">Add Item</button></li>
             </ul>
         </nav>
     </header>
     <main>
         <section id="new-project" class="none">
             <form action="">
-                <div class="title-div">
+                <div class="input-div">
+                    <label for="project-name">Name</label>
+                    <input type="text" id="project-name" name="project-name">
+                </div>
+                <button id="submit-project">Submit</button>
+                <button id="close-project-form">Close</button>
+            </form>
+        </section>
+        <section id="new-item" class="none">
+            <form action="">
+                <div class="input-div">
                     <label for="title">Title</label>
                 <input type="text" name="title" id="title" placeholder="title">
                 </div>
-                <div class="description-div">
+                <div class="input-div">
                     <label for="description">Description</label>
                     <input type="text" name="description" id="description">
                 </div>
-                <div class="due-date-div">
+                <div class="input-div">
                     <label for="due-date">Due Date</label>
                     <input type="date" name="date" id="date">
                 </div>
-                <div class="priority-div">
+                <div class="input-div">
                     <p>Priority</p>
                     <ul>
                         <li>
@@ -50,7 +60,8 @@
                         </li>
                     </ul>
                 </div>
-                <button>Submit</button>
+                <button id="submit-item">Submit</button>
+                <button id="close-item-form">Close</button>
             </form>
         </section>
         <section class="project-list">
