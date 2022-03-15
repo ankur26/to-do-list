@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do</title>
 </head>
+
 <body>
     <header class="header">
         <h1>To-Do List</h1>
@@ -17,6 +19,40 @@
         </nav>
     </header>
     <main>
+        <section id="new-project" class="none">
+            <form action="">
+                <div class="title-div">
+                    <label for="title">Title</label>
+                <input type="text" name="title" id="title" placeholder="title">
+                </div>
+                <div class="description-div">
+                    <label for="description">Description</label>
+                    <input type="text" name="description" id="description">
+                </div>
+                <div class="due-date-div">
+                    <label for="due-date">Due Date</label>
+                    <input type="date" name="date" id="date">
+                </div>
+                <div class="priority-div">
+                    <p>Priority</p>
+                    <ul>
+                        <li>
+                            <label for="very-high-priority"><input type="radio" name="priority" id="very-high-priority" value="1"> Very High</label>
+                        </li>
+                        <li>
+                            <label for="high-priority"><input type="radio" name="priority" id="high-priority" value="2"> High</label>
+                        </li>
+                        <li>
+                            <label for="normal-priority"><input type="radio" name="priority" id="normal-priority" value="3"> Normal</label>
+                        </li>
+                        <li>
+                            <label for="low-priority"><input type="radio" name="priority" id="low-priority" value="4">Low</label>
+                        </li>
+                    </ul>
+                </div>
+                <button>Submit</button>
+            </form>
+        </section>
         <section class="project-list">
             <h2>Projects/Lists</h2>
             <div class="projects">
@@ -26,10 +62,11 @@
         <section class="project-item-list">
             <h2>Items for </h2>
             <div class="items">
-                
+
             </div>
         </section>
     </main>
     <script src="main.js"></script>
 </body>
+
 </html>
