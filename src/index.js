@@ -12,9 +12,10 @@ let closeProjectForm = document.getElementById('close-project-form');
 let itemForm = document.getElementById('item-form');
 let projectForm = document.getElementById('project-form');
 let errorDiv = document.getElementById('error-div');
+let projectList = document.querySelector('.projects');
 let projects = [];
 let items = [];
-
+let selectedProjectIndex = 0;
 //DOM functions
 function removeForms(){
     newItemFormDiv.classList.add('none');
@@ -52,6 +53,14 @@ function showInvalidErrorMessage(message){
         errorDiv.classList.add('none');
     }, 2500);
 }
+function getFormData(form){
+    let inputs = [...form.querySelectorAll('.input-div>input')];
+    let output = {}
+    inputs.forEach(input=>{
+        output[input.id] = input.value;
+    });
+    return output;
+}
 function addItemToProject(event){
     event.preventDefault();
     if(projects.length === 0){
@@ -61,14 +70,41 @@ function addItemToProject(event){
     console.log(event.target);
     removeForms();
 }
+
 function addNewProject(event){
     event.preventDefault();
-    console.log(event);
+    let project = getFormData(projectForm);
+    projects.push(project);
+    refreshProjectList();
     removeForms();
 
 }
+function deleteProject(){
+    let index = parseInt(this.value);
+    console.log(index);
+}
 
+function renderProjectDiv(projectObject,index){
+    let div = document.createElement('div');
+    div.classList.add('project');
+    let h3 = document.createElement('h3');
+    h3.textContent = projectObject['project-name'];
+    let deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.setAttribute('value',`${index}`);
+    deleteButton.addEventListener('click',deleteProject);
+    div.append(h3);
+    div.append(deleteButton);
+    return div;
+}
 
+function refreshProjectList(){
+    projectList.innerHTML = '';
+    projects.forEach((project,index)=>{
+        let div = renderProjectDiv(project,index);
+        projectList.append(div);
+    })
+}
 
 //Event Listeners
 addItemButton.addEventListener('click',toggle);
