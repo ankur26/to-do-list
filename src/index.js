@@ -84,17 +84,28 @@ function deleteProject(){
     console.log(index);
 }
 
+function viewProject(){
+    let index = parseInt(this.value);
+    console.log(index);
+}
+
 function renderProjectDiv(projectObject,index){
     let div = document.createElement('div');
-    div.classList.add('project');
     let h3 = document.createElement('h3');
-    h3.textContent = projectObject['project-name'];
     let deleteButton = document.createElement('button');
+    let viewButton = document.createElement('button');
+    h3.textContent = projectObject['project-name'];
     deleteButton.textContent = 'Delete';
     deleteButton.setAttribute('value',`${index}`);
     deleteButton.addEventListener('click',deleteProject);
+    viewButton.textContent = 'View';
+    viewButton.setAttribute('value',`${index}`);
+    viewButton.addEventListener('click',viewProject);
+    div.classList.add('project');
     div.append(h3);
+    div.append(viewButton);
     div.append(deleteButton);
+
     return div;
 }
 
