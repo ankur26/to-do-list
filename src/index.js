@@ -68,6 +68,7 @@ function addItemToProject(event){
         return;
     }
     console.log(event.target);
+    resetForms();
     removeForms();
 }
 
@@ -76,17 +77,23 @@ function addNewProject(event){
     let project = getFormData(projectForm);
     projects.push(project);
     refreshProjectList();
+    resetForms();
     removeForms();
 
 }
 function deleteProject(){
     let index = parseInt(this.value);
-    console.log(index);
+    if (selectedProjectIndex === index){
+        selectedProjectIndex = 0;
+    }
+    projects.splice(index,1);
+    refreshProjectList();
 }
 
 function viewProject(){
     let index = parseInt(this.value);
-    console.log(index);
+    selectedProjectIndex = index;
+    refreshProjectList();
 }
 
 function renderProjectDiv(projectObject,index){
@@ -105,14 +112,19 @@ function renderProjectDiv(projectObject,index){
     div.append(h3);
     div.append(viewButton);
     div.append(deleteButton);
-
     return div;
 }
 
 function refreshProjectList(){
     projectList.innerHTML = '';
+    if(selectedProjectIndex > 0 && projects.length === 1){
+        selectedProjectIndex = 0;
+    }
     projects.forEach((project,index)=>{
         let div = renderProjectDiv(project,index);
+        if(index === selectedProjectIndex ){
+            div.classList.add('selected');
+        }
         projectList.append(div);
     })
 }

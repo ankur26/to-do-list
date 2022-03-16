@@ -8,3 +8,6 @@ ul{
     border: 1px solid red;
     color: red;
 }
+.selected{
+    color: coral;
+}
