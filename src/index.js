@@ -76,10 +76,10 @@ function addItemToProject(event) {
 	}
 	console.log(event.target);
     let item = { id: idGenerator(),...getFormData(itemForm),projectId:projects[selectedProjectIndex].id};
-    console.log(item);
-
+    items.push(item);
 	resetForms();
 	removeForms();
+    refreshProjectList();
 }
 
 function addNewProject(event) {
@@ -105,16 +105,62 @@ function viewProject() {
 	refreshProjectList();
 }
 
+function viewItem(){
+    let desc = this.parentNode.querySelector('.none.description') || this.parentNode.querySelector('.description');
+    console.log(this);
+    if(this.parentNode.querySelector('.none.description')){
+        this.innerHTML = "Close Item Description";
+    }
+    else{
+        this.innerHTML = "View Item Description";
+    }
+    desc.classList.toggle("none");
+
+}
+
+function deleteItem(){
+    console.log(this.dataset.id);
+}
+
+function renderItem(item){
+    let div = document.createElement('div');
+    let titlePriorityDate = document.createElement('h3');
+    let description = document.createElement('p');
+    let viewItemButton = document.createElement('button');
+    let deleteItemButton = document.createElement('button');
+
+    titlePriorityDate.textContent = `${item.title} Due:${item.date} Priority:${item.priority}`;
+    description.textContent = `${item.description}`;
+    viewItemButton.innerText = 'View Item Description';
+    viewItemButton.dataset.id = `${item.id}`;
+    viewItemButton.addEventListener('click',viewItem);
+    deleteItemButton.innerText = 'Delete Item';
+    deleteItemButton.dataset.id = `${item.id}`;
+
+    description.classList.add('none');
+    description.classList.add('description');
+
+
+    div.append(titlePriorityDate);
+    div.append(description);
+    div.append(viewItemButton);
+    div.append(deleteItemButton);
+
+    return div;
+}
+
+
 function refreshItemList(project) {
 	if (project) {
+        itemList.innerHTML = '';
 		let id = project.id;
 		let name = project['project-name'];
-		let itemList = items.filter((item) => {
-			if (item.projectId === id) {
-				return item;
-			}
-		});
-		console.log(itemList);
+		items.forEach(i=>{
+            if(i.projectId == id){
+                let itemDiv = renderItem(i);
+                itemList.append(itemDiv);
+            }
+        })
 		projectItemListHeader.textContent = `Items for ${name}`;
 	} else {
 		if (projects.length === 0) {
