@@ -119,7 +119,9 @@ function viewItem(){
 }
 
 function deleteItem(){
-    console.log(this.dataset.id);
+    let id = this.dataset.id;
+    items = items.filter(i=> i.id !== id );
+    refreshProjectList();
 }
 
 function renderItem(item){
@@ -136,7 +138,7 @@ function renderItem(item){
     viewItemButton.addEventListener('click',viewItem);
     deleteItemButton.innerText = 'Delete Item';
     deleteItemButton.dataset.id = `${item.id}`;
-
+    deleteItemButton.addEventListener('click',deleteItem);
     description.classList.add('none');
     description.classList.add('description');
 
