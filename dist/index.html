@@ -9,62 +9,67 @@
 </head>
 
 <body>
-    <header class="header">
-        <h1>To-Do List</h1>
-        <nav>
-            <ul>
-                <li><button id="add-project">Add Project</button></li>
-                <li><button id="add-item">Add Item</button></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <div id="error-div" class="error none"></div>
-        <section id="new-project" class="none">
-            <form action="" id="project-form">
-                <div class="input-div">
-                    <label for="project-name">Name</label>
-                    <input type="text" id="project-name" name="project-name" required>
-                </div>
-                <button id="submit-project" type="submit">Submit</button>
-                <button id="close-project-form">Close</button>
-            </form>
-        </section>
-        <section id="new-item" class="none">
-            <form action="" id="item-form">
-                <div class="input-div">
-                    <label for="title">Title</label>
-                <input type="text" name="title" id="title" placeholder="title" required>
-                </div>
-                <div class="input-div">
-                    <label for="description">Description</label>
-                    <input type="text" name="description" id="description" required>
-                </div>
-                <div class="input-div">
-                    <label for="date">Due Date</label>
-                    <input type="date" name="date" id="date" required>
-                </div>
-                <div class="input-div">
-                    <label for="priority">Priority</label>
-                    <input type="range" name="priority" id="priority" min="1" max="4" step="1">
-                </div>
-                <button id="submit-item" type="submit">Submit</button>
-                <button id="close-item-form">Close</button>
-            </form>
-        </section>
-        <section class="project-list">
-            <h2>Projects/Lists</h2>
-            <div class="projects">
+    <div class="container">
 
-            </div>
-        </section>
-        <section class="project-item-list">
-            <h2>Items for </h2>
-            <div class="items">
+        <header class="header">
+            <h1>To-Do List</h1>
+            <nav>
+                <ul>
+                    <li><button id="add-project">Add Project</button></li>
+                    <li><button id="add-item">Add Item</button></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
 
-            </div>
-        </section>
-    </main>
+            <section id="new-project" class="none">
+                <form action="" id="project-form">
+                    <div class="input-div">
+                        <label for="project-name">Name</label>
+                        <input type="text" id="project-name" name="project-name" required>
+                    </div>
+                    <button id="submit-project" type="submit">Submit</button>
+                    <button id="close-project-form">Close</button>
+                </form>
+            </section>
+            <section id="new-item" class="none">
+                <form action="" id="item-form">
+                    <div class="input-div">
+                        <label for="title">Title</label>
+                        <input type="text" name="title" id="title" placeholder="title" required>
+                    </div>
+                    <div class="input-div">
+                        <label for="description">Description</label>
+                        <input type="text" name="description" id="description" required>
+                    </div>
+                    <div class="input-div">
+                        <label for="date">Due Date</label>
+                        <input type="date" name="date" id="date" required>
+                    </div>
+                    <div class="input-div">
+                        <label for="priority">Priority</label>
+                        <input type="range" name="priority" id="priority" min="1" max="4" step="1">
+                    </div>
+                    <button id="submit-item" type="submit">Submit</button>
+                    <button id="close-item-form">Close</button>
+                </form>
+            </section>
+
+
+            <section class="project-list">
+                <h2>Projects/Lists</h2>
+                <div class="projects">
+
+                </div>
+            </section>
+            <section class="project-item-list">
+                <h2>Items for </h2>
+                <div class="items">
+
+                </div>
+            </section>
+        </main>
+    </div>
     <script src="main.js"></script>
 </body>
 
