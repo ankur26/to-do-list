@@ -3,6 +3,7 @@ import './reset.css';
 import './styles.css';
 
 export const domController = (() => {
+	let mainDiv = document.querySelector('main');
 	let addItemButton = document.getElementById('add-item');
 	let addProjectButton = document.getElementById('add-project');
 	let newItemFormDiv = document.getElementById('new-item');
@@ -30,6 +31,7 @@ export const domController = (() => {
 		newProjectFormDiv.classList.add('none');
 		projectListDiv.classList.remove('none');
 		itemListDiv.classList.remove('none');
+		mainDiv.dataset.display = "list";
 	}
 
 	function toggle() {
@@ -42,6 +44,7 @@ export const domController = (() => {
 		}
 		projectListDiv.classList.toggle('none');
 		itemListDiv.classList.toggle('none');
+		mainDiv.dataset.display = "form";
 
 		// console.log(this.innerHTML);
 	}
@@ -139,6 +142,8 @@ export const domController = (() => {
 		deleteItemButton.innerText = 'Delete Item';
 		deleteItemButton.dataset.id = `${item.id}`;
 		deleteItemButton.addEventListener('click', deleteItem);
+
+		div.classList.add('item');
 		description.classList.add('none');
 		description.classList.add('description');
 

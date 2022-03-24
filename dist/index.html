@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container" >
 
         <header class="header">
             <h1>To-Do List</h1>
@@ -20,7 +20,7 @@
                 </ul>
             </nav>
         </header>
-        <main>
+        <main data-display="list">
 
             <section id="new-project" class="none">
                 <form action="" id="project-form">
@@ -28,8 +28,10 @@
                         <label for="project-name">Name</label>
                         <input type="text" id="project-name" name="project-name" required>
                     </div>
-                    <button id="submit-project" type="submit">Submit</button>
-                    <button id="close-project-form">Close</button>
+                    <div class="buttons">
+                        <button id="submit-project" type="submit">Submit</button>
+                        <button id="close-project-form">Close</button>
+                    </div>
                 </form>
             </section>
             <section id="new-item" class="none">
@@ -50,8 +52,10 @@
                         <label for="priority">Priority</label>
                         <input type="range" name="priority" id="priority" min="1" max="4" step="1">
                     </div>
-                    <button id="submit-item" type="submit">Submit</button>
-                    <button id="close-item-form">Close</button>
+                    <div class="buttons">
+                        <button id="submit-item" type="submit">Submit</button>
+                        <button id="close-item-form">Close</button>
+                    </div>
                 </form>
             </section>
 
