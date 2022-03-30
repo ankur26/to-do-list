@@ -126,7 +126,7 @@ export const domController = (() => {
 
 	function deleteItem() {
 		let id = this.dataset.id;
-		items = items.filter((i) => i.id !== id);
+		ItemFunctions.deleteItem(id);
 		refreshProjectList();
 	}
 
