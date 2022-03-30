@@ -1,6 +1,11 @@
 
 import './reset.css';
 import './styles.css';
+import { ProjectFunctions } from './projectFunctions';
+import { ItemFunctions } from './itemFunctions';
+
+
+
 
 export const domController = (() => {
 	let mainDiv = document.querySelector('main');
@@ -18,14 +23,8 @@ export const domController = (() => {
 	let projectListDiv = document.querySelector('.project-list');
 	let itemListDiv = document.querySelector('.project-item-list');
 	let projectItemListHeader = document.querySelector('.project-item-list>h2');
-	let projects = [];
-	let items = [];
+	// let items = [];
 	let selectedProjectIndex = 0;
-
-	function idGenerator() {
-		let id = `${Math.floor(Math.random() * 10000000) + 1}${new Date().toDateString()}`;
-		return id;
-	}
 	function removeForms() {
 		newItemFormDiv.classList.add('none');
 		newProjectFormDiv.classList.add('none');
@@ -75,13 +74,17 @@ export const domController = (() => {
 	}
 	function addItemToProject(event) {
 		event.preventDefault();
+		let projects = ProjectFunctions.viewProjects();
 		if (projects.length === 0) {
 			showInvalidErrorMessage('Please add a project first before adding an item to it.');
 			return;
 		}
-		console.log(event.target);
-		let item = { id: idGenerator(), ...getFormData(itemForm), projectId: projects[selectedProjectIndex].id };
-		items.push(item);
+		// console.log(event.target);
+		// let item = { id: idGenerator(), ...getFormData(itemForm), projectId: projects[selectedProjectIndex].getId() };
+		// items.push(item);
+		let formData = {...getFormData(itemForm)};
+		
+		ItemFunctions.addItem(formData.title,formData.duedate,formData.priority,formData.description,projects[selectedProjectIndex].getId());
 		resetForms();
 		removeForms();
 		refreshProjectList();
@@ -89,8 +92,8 @@ export const domController = (() => {
 
 	function addNewProject(event) {
 		event.preventDefault();
-		let project = { id: idGenerator(), ...getFormData(projectForm) };
-		projects.push(project);
+		let projectName = document.getElementById('project-name');
+		ProjectFunctions.addProject(projectName.value);
 		refreshProjectList();
 		resetForms();
 		removeForms();
@@ -100,7 +103,7 @@ export const domController = (() => {
 		if (selectedProjectIndex === index) {
 			selectedProjectIndex = 0;
 		}
-		projects.splice(index, 1);
+		ProjectFunctions.deleteProject(this.dataset.id);
 		refreshProjectList();
 	}
 
@@ -134,13 +137,13 @@ export const domController = (() => {
 		let viewItemButton = document.createElement('button');
 		let deleteItemButton = document.createElement('button');
 
-		titlePriorityDate.textContent = `${item.title} Due:${item.date} Priority:${item.priority}`;
-		description.textContent = `${item.description}`;
+		titlePriorityDate.textContent = `${item.getTitle()} Due:${item.getDueDate()} Priority:${item.getPriority()}`;
+		description.textContent = `${item.getDescription()}`;
 		viewItemButton.innerText = 'View Item Description';
-		viewItemButton.dataset.id = `${item.id}`;
+		viewItemButton.dataset.id = `${item.getId()}`;
 		viewItemButton.addEventListener('click', viewItem);
 		deleteItemButton.innerText = 'Delete Item';
-		deleteItemButton.dataset.id = `${item.id}`;
+		deleteItemButton.dataset.id = `${item.getId()}`;
 		deleteItemButton.addEventListener('click', deleteItem);
 
 		div.classList.add('item');
@@ -156,15 +159,16 @@ export const domController = (() => {
 	}
 
 	function refreshItemList(project) {
+		let projects = ProjectFunctions.viewProjects();
 		if (project) {
 			itemList.innerHTML = '';
-			let id = project.id;
-			let name = project['project-name'];
+			let id = project.getId();
+			let name = project.getname();
+			let items = ItemFunctions.viewItems(project.getId());
 			items.forEach((i) => {
-				if (i.projectId == id) {
 					let itemDiv = renderItem(i);
 					itemList.append(itemDiv);
-				}
+				
 			});
 			projectItemListHeader.textContent = `Items for ${name}`;
 		} else {
@@ -179,13 +183,13 @@ export const domController = (() => {
 		let h3 = document.createElement('h3');
 		let deleteButton = document.createElement('button');
 		let viewButton = document.createElement('button');
-		h3.textContent = projectObject['project-name'];
+		h3.textContent = projectObject.getname();
 		deleteButton.textContent = 'Delete';
-		deleteButton.dataset.id = projectObject.id;
+		deleteButton.dataset.id = projectObject.getId();
 		deleteButton.setAttribute('value', `${index}`);
 		deleteButton.addEventListener('click', deleteProject);
 		viewButton.textContent = 'View';
-		viewButton.dataset.id = projectObject.id;
+		viewButton.dataset.id = projectObject.getId();
 		viewButton.setAttribute('value', `${index}`);
 		viewButton.addEventListener('click', viewProject);
 		div.classList.add('project');
@@ -197,12 +201,12 @@ export const domController = (() => {
 
 	function refreshProjectList() {
 		projectList.innerHTML = '';
-
+		let projects = ProjectFunctions.viewProjects();
 		if (projects.length > 0) {
 			addItemButton.removeAttribute('disabled');
 			if (selectedProjectIndex > 0 && projects.length === 1) {
 				selectedProjectIndex = 0;
-				refreshItemList(project[0]);
+				refreshItemList(projects[0]);
 			}
 			projects.forEach((project, index) => {
 				let div = renderProjectDiv(project, index);
