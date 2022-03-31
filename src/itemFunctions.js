@@ -18,6 +18,33 @@ const ItemFunctions = ( ()=>{
         return {getId,getTitle,setTitle,getPriority,setPriority,getDueDate,setDueDate,getDescription,setDescription,getProjectId};
     };
 
+    const renderItem = (item) => {
+		let div = document.createElement('div');
+		let titlePriorityDate = document.createElement('h3');
+		let description = document.createElement('p');
+		let viewItemButton = document.createElement('button');
+		let deleteItemButton = document.createElement('button');
+
+		titlePriorityDate.textContent = `${item.getTitle()} Due:${item.getDueDate()} Priority:${item.getPriority()}`;
+		description.textContent = `${item.getDescription()}`;
+		viewItemButton.innerText = 'View Item Description';
+		viewItemButton.dataset.id = `${item.getId()}`;
+		viewItemButton.addEventListener('click', viewItem);
+		deleteItemButton.innerText = 'Delete Item';
+		deleteItemButton.dataset.id = `${item.getId()}`;
+		deleteItemButton.addEventListener('click', deleteItem);
+
+		div.classList.add('item');
+		description.classList.add('none');
+		description.classList.add('description');
+
+		div.append(titlePriorityDate);
+		div.append(description);
+		div.append(viewItemButton);
+		div.append(deleteItemButton);
+
+		return div;
+	}
     const addItem = (title,duedate,priority,description,projectId) =>{
         items.push(item(title,duedate,priority,description,projectId));
     }
@@ -41,7 +68,7 @@ const ItemFunctions = ( ()=>{
         return items.filter(i => i.getProjectId() === projectId);
     }
 
-    return {addItem,updateItem,deleteItem,viewItems};
+    return {addItem,updateItem,deleteItem,viewItems,renderItem};
 } )();
 
 export { ItemFunctions };

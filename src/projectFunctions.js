@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
 const ProjectFunctions = ( ()=>{
-    
     let projects = [];
     
     const project = (name)=>{
