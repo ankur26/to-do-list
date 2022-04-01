@@ -19,33 +19,62 @@ export const domController = (() => {
 	let projectListDiv = document.querySelector('.project-list');
 	let itemListDiv = document.querySelector('.project-item-list');
 	let projectItemListHeader = document.querySelector('.project-item-list>h2');
+	let priorityInput = document.getElementById('priority');
+	let priorityDisplay = document.getElementById('priority-value');
+	let priorities = ['Low','Normal','High','Very High'];
 
 	const renderFunctions =( () => {
+
+		/*
+		This function is used to render an item. 
+		Takes an input as an item object present in ItemFunctions 
+		*/
 		const renderItem = (item) => {
 			let div = document.createElement('div');
-			let titlePriorityDate = document.createElement('h3');
+			let contentDiv = document.createElement('div');
+			let title = document.createElement('h3');
+			let dueDate = document.createElement('p');
+			let priority = document.createElement('p');
 			let description = document.createElement('p');
+			let buttonDiv = document.createElement('div');
 			let viewItemButton = document.createElement('button');
 			let deleteItemButton = document.createElement('button');
+			// let markCompleteButton = document.createElement('button');
 
-			titlePriorityDate.textContent = `${item.getTitle()} Due:${item.getDueDate()} Priority:${item.getPriority()}`;
+			title.textContent = `${item.getTitle()}`;
+			dueDate.textContent = `${item.getDueDate()}`;
+			priority.textContent = `${priorities[parseInt(item.getPriority())-1]}`;
 			description.textContent = `${item.getDescription()}`;
 			viewItemButton.innerText = 'View Item Description';
-			viewItemButton.dataset.id = `${item.getId()}`;
-			viewItemButton.addEventListener('click', viewItem);
 			deleteItemButton.innerText = 'Delete Item';
-			deleteItemButton.dataset.id = `${item.getId()}`;
-			deleteItemButton.addEventListener('click', deleteItem);
 
 			div.classList.add('item');
-			description.classList.add('none');
+			contentDiv.classList.add('content');
+			buttonDiv.classList.add('item-buttons');
+			title.classList.add('title');
+			dueDate.classList.add('dueDate');
+			priority.classList.add('priority');
 			description.classList.add('description');
+			description.classList.add('none');
+			
 
-			div.append(titlePriorityDate);
-			div.append(description);
-			div.append(viewItemButton);
-			div.append(deleteItemButton);
+			buttonDiv.dataset.id = `${item.getId()}`;
+			priority.dataset.priority = `${item.getPriority()}`;
+			div.dataset.priority = `${item.getPriority()}`;
 
+			
+			viewItemButton.addEventListener('click', viewItem);
+			deleteItemButton.addEventListener('click', deleteItem);
+
+			buttonDiv.append(viewItemButton);
+			buttonDiv.append(deleteItemButton);
+			contentDiv.append(title);
+			contentDiv.append(dueDate);
+			contentDiv.append(priority);
+			contentDiv.append(description);
+			div.append(contentDiv);
+			div.append(buttonDiv);
+			
 			return div;
 		};
 
@@ -174,9 +203,9 @@ export const domController = (() => {
 	}
 
 	function viewItem() {
-		let desc = this.parentNode.querySelector('.none.description') || this.parentNode.querySelector('.description');
-		console.log(this);
-		if (this.parentNode.querySelector('.none.description')) {
+		let desc = this.parentNode.parentNode.querySelector('.none.description') || this.parentNode.parentNode.querySelector('.description');
+		// console.log(this);
+		if (this.parentNode.parentNode.querySelector('.none.description')) {
 			this.innerHTML = 'Close Item Description';
 		} else {
 			this.innerHTML = 'View Item Description';
@@ -185,9 +214,15 @@ export const domController = (() => {
 	}
 
 	function deleteItem() {
-		let id = this.dataset.id;
+		let id = this.parentNode.dataset.id;
 		ItemFunctions.deleteItem(id);
 		refreshProjectList();
+	}
+
+	function showPriorityMessage(){
+		console.log(this.value)
+		priorityDisplay.textContent = priorities[parseInt(this.value)-1];
+		priorityDisplay.dataset.priority = `${this.value}`;
 	}
 
 	function refreshItemList(project) {
@@ -236,6 +271,7 @@ export const domController = (() => {
 
 		itemForm.addEventListener('submit', addItemToProject);
 		projectForm.addEventListener('submit', addNewProject);
+		priorityInput.addEventListener('input',showPriorityMessage);
 
 		refreshProjectList();
 	}

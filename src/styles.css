@@ -58,7 +58,6 @@ ul{
 .selected{
     color: coral;
     order: -1;
-    
 }
 
 main[data-display="form"]{
@@ -95,11 +94,58 @@ main[data-display="form"]{
 .item{
     display: flex;
     gap:15px;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     margin:10px 0;
 
 }
-.item>.description{
+.description{
     font-size:2rem;
+}
+#priority-value[data-priority="1"]{
+    color:green;
+}
+#priority-value[data-priority="2"]{
+    color:greenyellow;
+}
+#priority-value[data-priority="3"]{
+    color:yellow;
+}
+#priority-value[data-priority="4"]{
+    color:red;
+}
 
+.priority[data-priority="1"]{
+    color:green;
+}
+.priority[data-priority="2"]{
+    color:greenyellow;
+}
+.priority[data-priority="3"]{
+    color:yellow;
+}
+.priority[data-priority="4"]{
+    color:red;
+}
+.items{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+}
+.item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* align-items: center; */
+}
+.item[data-priority="1"]{
+    order:4;
+}
+.item[data-priority="2"]{
+    order:3;
+}
+.item[data-priority="3"]{
+    order:2;
+}
+.item[data-priority="4"]{
+    order:1;
 }
