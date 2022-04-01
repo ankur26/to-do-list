@@ -42,7 +42,7 @@ export const domController = (() => {
 			// let markCompleteButton = document.createElement('button');
 
 			title.textContent = `${item.getTitle()}`;
-			dueDate.textContent = `${item.getDueDate()}`;
+			dueDate.textContent = `Due: ${item.getDueDate()}`;
 			priority.textContent = `${priorities[parseInt(item.getPriority())-1]}`;
 			description.textContent = `${item.getDescription()}`;
 			viewItemButton.innerText = 'View Item Description';
